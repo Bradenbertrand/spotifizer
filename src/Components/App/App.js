@@ -1,15 +1,22 @@
 import React from 'react';
 import './App.css';
-let logo = ""
+import SearchBar from '../SearchBar/SearchBar';
+import SearchResults from '../SearchResults/SearchResults';
+import Playlist from '../Playlist/Playlist';
+
+let logo = "";
+
+
+
 function App() {
   return (
     <div>
-      <h1>Spotifi<span class="highlight">zer</span></h1>
-      <div class="App">
-        {/* Add a SearchBar component */}
-    <div class="App-playlist">
-          {/* Add a SearchResults component */}
-      {/* Add a Playlist component */}
+      <h1>Spotifi<span className="highlight">zer</span></h1>
+      <div className="App">
+        <SearchBar></SearchBar>
+    <div className="App-playlist">
+        <SearchResults></SearchResults>
+        <Playlist></Playlist>
     </div>
       </div>
     </div>
