@@ -24,6 +24,12 @@ class App extends React.Component {
         artist: "2pac",
         album: "americas most wanted",
         id: "152"
+      },
+      {
+        name: "Blue Coke",
+        artist: "2pac",
+        album: "americas most wanted",
+        id: "152"
       }]
     };
   }
@@ -36,7 +42,7 @@ class App extends React.Component {
           <SearchBar></SearchBar>
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults}></SearchResults>
-            <Playlist playlistName={this.state.playlistName} playlistTracks={this.playlistTracks}></Playlist>
+            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks}></Playlist>
           </div>
         </div>
       </div>
