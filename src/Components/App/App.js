@@ -69,13 +69,23 @@ class App extends React.Component {
     this.addTrack = this.addTrack.bind(this)
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
   }
+  
+  savePlaylist() {
+    var TrackURIs = []
+    this.state.playlistTracks.forEach(track => {
+        TrackURIs.concat(track);
+    })
+}
+
   //Updates the playlists name state
   updatePlaylistName(name) {
     this.setState({
       playlistName: name
     })
   }
+
   //Adds a track to the playlist
   addTrack(track) {
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
@@ -85,6 +95,7 @@ class App extends React.Component {
       playlistTracks: this.state.playlistTracks.concat(track)
     })
   }
+
   //Removes a track from the playlist
   removeTrack(track) {
     if (!this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
@@ -109,7 +120,8 @@ class App extends React.Component {
             <Playlist playlistName={this.state.playlistName} 
             playlistTracks={this.state.playlistTracks} 
             onRemove={this.removeTrack} onAdd={this.addTrack} 
-            onNameChange={this.updatePlaylistName}>
+            onNameChange={this.updatePlaylistName}
+            onSave={this.savePlaylist}>
             </Playlist>
           </div>
         </div>
