@@ -27,43 +27,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchResults: [{
-        name: "red september",
-        artist: "juiceWrld",
-        album: "kill yourself",
-        id: "142",
-      },{
-        name: "beetle juice",
-        artist: "beetles",
-        album: "red room",
-        id: "653",
-      },{
-        name: "Bitch",
-        artist: "Sheck Wes",
-        album: "All American Reject",
-        id: "723",
-      },{
-        name: "Green Cheese",
-        artist: "Drake",
-        album: "Blond",
-        id: "133"
-      },
-      {
-        name: "Blue Coke",
-        artist: "2pac",
-        album: "americas most wanted",
-        id: "152"
-      },{
-        name: "Hypnotize",
-        artist: "Biggie",
-        album: "big life",
-        id: "623"
-      },{
-        name: "Gattling Gun",
-        artist: "MGK",
-        album: "Suck off",
-        id: "153"
-      }],
+      searchResults: [],
       playlistName: "Users Playlist",
       playlistTracks: []
     };
@@ -73,17 +37,13 @@ class App extends React.Component {
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
   }
-  
-  login() {
-
-  }
 
   search(term) {
-    return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, 
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
+    if (term === "") {
+      return;
+    }
+    Spotify.search(term, accessToken).then(tracks => {
+      this.setState({ searchResults: tracks})
     })
   }
 

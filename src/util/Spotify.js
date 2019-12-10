@@ -32,7 +32,30 @@ const Spotify = {
         }
 
         return _token;
-    }
+    },
+
+    search(term, accessToken) {
+        return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}&market=CA&limit=20`, 
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }).then(response => {
+            return response.json();
+        }).then(jsonResponse => {
+            console.log("Mapping array:")
+            console.log(jsonResponse)
+            return (jsonResponse.tracks.items.map(track => {
+                return {
+                    id: track.id,
+                    name: track.name,
+                    artist: track.artists[0].name,
+                    album: track.album.name,
+                    URI: track.uri
+                }
+            }));
+        })
+      }
 }
 
 export default Spotify
