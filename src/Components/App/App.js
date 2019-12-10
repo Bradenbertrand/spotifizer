@@ -3,8 +3,9 @@ import './App.css';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
+import Spotify from '../../util/Spotify'
 
-let logo = "";
+const accessToken = Spotify.getAccessToken();
 
 // Removes an object from an array via an attribute
 var removeByAttr = function(arr, attr, value){
@@ -70,8 +71,22 @@ class App extends React.Component {
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
+    this.search = this.search.bind(this);
   }
   
+  login() {
+
+  }
+
+  search(term) {
+    return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, 
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+  }
+
   savePlaylist() {
     var TrackURIs = []
     this.state.playlistTracks.forEach(track => {
@@ -111,7 +126,7 @@ class App extends React.Component {
       <div>
         <h1>Spotifi<span className="highlight">zer</span></h1>
         <div className="App">
-          <SearchBar></SearchBar>
+          <SearchBar onSearch={this.search}></SearchBar>
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} 
             onAdd={this.addTrack} 
