@@ -50,8 +50,10 @@ class App extends React.Component {
   savePlaylist() {
     var TrackURIs = []
     this.state.playlistTracks.forEach(track => {
-        TrackURIs.concat(track);
+        TrackURIs.push(track);
     })
+    console.log(TrackURIs)
+    Spotify.uploadPlaylist(this.state.playlistName, TrackURIs, accessToken);
 }
 
   //Updates the playlists name state
@@ -96,7 +98,8 @@ class App extends React.Component {
             playlistTracks={this.state.playlistTracks} 
             onRemove={this.removeTrack} onAdd={this.addTrack} 
             onNameChange={this.updatePlaylistName}
-            onSave={this.savePlaylist}>
+            onSave={this.savePlaylist}
+            accessToken={accessToken}>
             </Playlist>
           </div>
         </div>
