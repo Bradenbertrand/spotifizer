@@ -6,7 +6,7 @@ import Playlist from '../Playlist/Playlist';
 
 let logo = "";
 
-
+// Removes an object from an array via an attribute
 var removeByAttr = function(arr, attr, value){
   var i = arr.length;
   while(i--){
@@ -68,8 +68,15 @@ class App extends React.Component {
     };
     this.addTrack = this.addTrack.bind(this)
     this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
   }
-
+  //Updates the playlists name state
+  updatePlaylistName(name) {
+    this.setState({
+      playlistName: name
+    })
+  }
+  //Adds a track to the playlist
   addTrack(track) {
     if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
       return;
@@ -78,7 +85,7 @@ class App extends React.Component {
       playlistTracks: this.state.playlistTracks.concat(track)
     })
   }
-
+  //Removes a track from the playlist
   removeTrack(track) {
     if (!this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
       return;
@@ -95,8 +102,15 @@ class App extends React.Component {
         <div className="App">
           <SearchBar></SearchBar>
           <div className="App-playlist">
-            <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} onRemove={this.removeTrack}></SearchResults>
-            <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} onRemove={this.removeTrack} onAdd={this.addTrack}></Playlist>
+            <SearchResults searchResults={this.state.searchResults} 
+            onAdd={this.addTrack} 
+            onRemove={this.removeTrack}>
+            </SearchResults>
+            <Playlist playlistName={this.state.playlistName} 
+            playlistTracks={this.state.playlistTracks} 
+            onRemove={this.removeTrack} onAdd={this.addTrack} 
+            onNameChange={this.updatePlaylistName}>
+            </Playlist>
           </div>
         </div>
       </div>

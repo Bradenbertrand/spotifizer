@@ -8,7 +8,7 @@ class Track extends React.Component {
         this.removeTrack = this.removeTrack.bind(this)
         this.handleOnClick = this.handleOnClick.bind(this)
     }
-
+    //Handles click
     handleOnClick() {
         if (this.props.isRemovable) {
             this.removeTrack();
@@ -16,11 +16,11 @@ class Track extends React.Component {
             this.addTrack();
         }
     }
-
+    // Handles adding a track
     addTrack() {
         this.props.onAdd(this.props.track)
     }
-
+    // Handles removing a track
     removeTrack() {
         this.props.onRemove(this.props.track)
     }
@@ -33,7 +33,7 @@ class Track extends React.Component {
                     <h3>{this.props.track.name}</h3>
                     <p>{this.props.track.artist + " " + this.props.track.album}</p>
                 </div>
-                <button className="Track-action" onClick={this.handleOnClick}>+</button>
+        <button className="Track-action" onClick={this.handleOnClick}>{this.props.symbol}</button>
             </div>
         )
     }
