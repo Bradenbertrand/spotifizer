@@ -55,7 +55,55 @@ const Spotify = {
                 }
             }));
         })
-      }
+      },
+
+    uploadPlaylist(playlistName, trackURIs, accessToken) {
+        if (playlistName && trackURIs.length) {
+            const headers = {
+              Authorization: `Bearer ${accessToken}`
+            };
+            let userID;
+            let playlistID;
+            return fetch('https://api.spotify.com/v1/me', {headers: headers}).then(response => { //Fetch users ID
+              if (response.ok) { //Check if response is OK
+                return response.json(); //Converts to JSON
+              }
+              throw new Error('Request failed!');
+            }, networkError => {
+              console.log(networkError.message);
+            }).then(jsonResponse => { //Creates playlist
+              userID = jsonResponse.id;
+              console.log("creating playlist....") 
+              return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({name: playlistName})
+              }).then(response => {
+                if (response.ok) { //Checks if response is OK
+                  return response.json();
+                }
+                throw new Error('Request failed!');
+              }, networkError => {
+                console.log(networkError.message);
+              }).then(jsonResponse => { //Uploads tracks to created playlist
+                console.log("Uploading Track")
+                playlistID = jsonResponse.id;
+                return fetch(`https://api.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`, {
+                  method: 'POST',
+                  headers: headers,
+                  body: {uris: trackURIs}
+                }).then(response => {
+                    return response.json();
+                }, networkError => {
+                  console.log(networkError.message);
+                }).then(jsonResponse => jsonResponse);
+              });
+            });
+      
+          } else {
+            return;
+          }
+        }
 }
 
 export default Spotify
