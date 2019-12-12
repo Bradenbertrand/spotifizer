@@ -21,7 +21,7 @@ const Spotify = {
 
         // Replace with your app's client ID, redirect URI and desired scopes
         const clientId = client_id;
-        const redirectUri = 'http://localhost:3000';
+        const redirectUri = 'http://spotifizer-builder.surge.sh';
         const scopes = [
             'playlist-modify-public',
             'playlist-modify-private'
