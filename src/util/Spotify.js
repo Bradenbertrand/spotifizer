@@ -23,7 +23,8 @@ const Spotify = {
         const clientId = client_id;
         const redirectUri = 'http://localhost:3000/';
         const scopes = [
-            'playlist-modify-public'
+            'playlist-modify-public',
+            'playlist-modify-private'
         ];
 
         // If there is no token, redirect to Spotify authorization
@@ -33,6 +34,7 @@ const Spotify = {
 
         return _token;
     },
+
     getClientID(accessToken) {
         let clientID = fetch(`https://api.spotify.com/v1/me`, 
         {
@@ -47,6 +49,7 @@ const Spotify = {
         return clientID
     },
 
+    //Uploads playlist to user account, returns playlist id
     async uploadPlaylist(name, accessToken) {
         let clientID = await this.getClientID(accessToken)
         return fetch(`https://api.spotify.com/v1/users/${clientID}/playlists`, {
@@ -60,10 +63,29 @@ const Spotify = {
         }).then(response => {
             return response.json();
         }).then(jsonResponse => {
-            console.log(jsonResponse)
+            return jsonResponse.id
         })
     },
 
+    async uploadTracks(playlistID, trackURIs, accessToken) {
+        let clientID = await this.getClientID(accessToken)
+        return fetch(`https://api.spotify.com/v1/users/${clientID}/playlists/${playlistID}/tracks`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            uris: trackURIs
+        })
+        }).then(response => {
+            return response.json();
+        }).then(jsonResponse => {
+            return jsonResponse;
+        })
+    },
+
+    //Searches spotify, returns array of track info
     search(term, accessToken) {
         return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}&market=CA&limit=20`, 
         {

@@ -47,13 +47,19 @@ class App extends React.Component {
     })
   }
 
-  savePlaylist() {
-    console.log(this.state.playlistTracks)
-    var TrackURIs = []
-    this.state.playlistTracks.forEach(track => {
-        TrackURIs.concat(track);
+  convertTrackstoTrackURIs(tracks) {
+    let trackURIs = tracks.map(track => {
+      return  "spotify:track:" + track.id
     })
-    Spotify.uploadPlaylist(this.state.playlistName, accessToken)
+    return trackURIs
+  }
+
+  async savePlaylist() {
+    let trackURIs = this.convertTrackstoTrackURIs(this.state.playlistTracks)
+    console.log(trackURIs)
+    let playlistID = await Spotify.uploadPlaylist(this.state.playlistName, accessToken)
+    Spotify.uploadTracks(playlistID, trackURIs, accessToken)
+
 }
 
   //Updates the playlists name state
