@@ -29,10 +29,8 @@ h2 {
 .App {
   height: 100%;
   padding: 0 17% 10% 17%;
-  background-image: url('./background_photo_desktop.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: rgb(115,115,115);
+  background: linear-gradient(0deg, rgba(115,115,115,1) 0%, rgba(205,205,205,1) 30%, rgba(115,115,115,1) 100%);
   font-family: 'Open Sans', sans-serif;
   font-weight: 500;
   color: #fff;
