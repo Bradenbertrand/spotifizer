@@ -33,6 +33,36 @@ const Spotify = {
 
         return _token;
     },
+    getClientID(accessToken) {
+        let clientID = fetch(`https://api.spotify.com/v1/me`, 
+        {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then(response => {
+            return response.json();
+        }).then(jsonResponse => {
+            return jsonResponse.id
+        })
+        return clientID
+    },
+
+    async uploadPlaylist(name, accessToken) {
+        let clientID = await this.getClientID(accessToken)
+        return fetch(`https://api.spotify.com/v1/users/${clientID}/playlists`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+                name: name
+            })
+        }).then(response => {
+            return response.json();
+        }).then(jsonResponse => {
+            console.log(jsonResponse)
+        })
+    },
 
     search(term, accessToken) {
         return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}&market=CA&limit=20`, 

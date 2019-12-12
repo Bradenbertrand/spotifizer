@@ -5,7 +5,6 @@ import Track from '../Track/Track'
 
 class TrackList extends React.Component {
     render() {
-        console.log(this.props.tracks)
         console.log("Creating TrackList")
         //Maps tracklist to a div of individual track components
         return (
